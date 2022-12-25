@@ -1,0 +1,20 @@
+th{
+    color: #fff;
+    background-color: #343a40;
+    border-color: #454d55;
+}
+
+tr:nth-child(even) {background: #fff}
+tr:nth-child(odd) {background: #f9f7f1}
+
+.invalid-tooltip{
+    display: flex;
+    width: -webkit-fill-available;
+    justify-content: center;
+}
+
+.disabled{
+    color: #d4d4d4 !important;
+    cursor: unset !important;
+}
+

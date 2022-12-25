@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <form class="needs-validation" [formGroup]="productForm" (ngSubmit)="onReactiveFormSubmit()">
+            <ngx-spinner></ngx-spinner>
+            <div class="form-row">
+              <div class="col-md-4 mb-4 form-group">
+                <label for="validationTooltip04">Product name</label>
+                <input type="text" formControlName="productName" class="form-control" id="validationTooltip04"
+                  placeholder="First name"
+                  [ngClass]="{ 'is-invalid': f.productName.invalid &&  (f.productName.touched ||  f.productName.dirty || submitted), 'is-valid': f.productName.valid }"
+                  required>
+                <div class="invalid-tooltip"
+                  *ngIf="( f.productName.invalid &&  (f.productName.touched ||  f.productName.dirty || submitted) )">
+                  Product name is required field.
+                </div>
+              </div>
+              <div class="col-md-4 mb-4 form-group"
+                [ngClass]="{ 'invalid-select' : f.shopType.invalid && ( submitted || f.shopType.touched ) }">
+                <label for="validationTooltip05">Gender type</label>
+                <ng-select formControlName="shopType" [items]="shopTypes" [clearable]="true" bindLabel="shopType"
+                  bindValue="_id" placeholder="Gender type"
+                  [ngClass]="{ 'is-invalid': submitted && f.shopType.invalid, 'is-valid': submitted &&  !f.shopType.invalid }"
+                  groupBy="country">
+                </ng-select>
+                <div *ngIf="f.shopType.invalid && ( submitted || f.shopType.touched )" class="invalid-tooltip">
+                  Please provide a Shop type.</div>
+              </div>
+              <div class="col-md-4 mb-4 form-group">
+                <label for="validationTooltip05">Color</label>
+                <ng-select formControlName="color" [items]="colors" [clearable]="true" [searchable]="true" bindLabel=""
+                  [multiple]="true" bindValue="" groupBy="" placeholder="Product available colors">
+                  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <div class="ng-select-row d-flex justify-content-between">
+                      <span> {{item}} </span>
+                      <span [ngStyle]="{'background-color' : item}" class="color-box"> aa </span>
+                    </div>
+                  </ng-template>
+                </ng-select>
+              </div>
+              <div class="col-md-4 mb-4 form-group">
+                <label for="validationTooltip04">Weight</label>
+                <input type="text" formControlName="weight" class="form-control" id="validationTooltip04"
+                  placeholder="Product weight">
+              </div>
+              <div class="col-md-4 mb-4 form-group">
+                <label for="validationTooltip05">size</label>
+                <ng-select formControlName="size" [items]="sizes" bindLabel="" bindValue="" [multiple]="true"
+                  placeholder="Product available sizes">
+                </ng-select>
+              </div>
+              <div class="col-md-4 mb-4 form-group">
+                <label for="validationTooltip04">Quantity</label>
+                <input type="number" formControlName="quantity" class="form-control" id="validationTooltip04"
+                  placeholder="Quantity in stock"
+                  [ngClass]="{ 'is-invalid': f.quantity.invalid &&  (f.quantity.touched ||  f.quantity.dirty || submitted), 'is-valid': f.quantity.valid }"
+                  required>
+                <div class="invalid-tooltip"
+                  *ngIf="( f.quantity.invalid &&  (f.quantity.touched ||  f.quantity.dirty || submitted) )">
+                  Stock Quantity of product is required field.
+                </div>
+              </div>
+              <div class="col-md-4 mb-4 form-group"
+                [ngClass]="{ 'invalid-select' : f.categpry.invalid && ( submitted || f.categpry.touched ) }">
+                <label for="validationTooltip05">Category</label>
+                <ng-select formControlName="categpry" [items]="categories" bindLabel="name" bindValue="_id"
+                  placeholder="Product category">
+                </ng-select>
+                <div *ngIf="f.categpry.invalid && ( submitted || f.categpry.touched )" class="invalid-tooltip">
+                  Please provide a category</div>
+              </div>
+              <div class="col-md-4 mb-4 form-group">
+                <label for="validationTooltip06">Price</label>
+                <fieldset>
+                  <div class="input-group mb-0">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input formControlName="price" type="text" class="form-control" placeholder="Addon On Both Side"
+                      [ngClass]="{ 'is-invalid': f.price.invalid &&  (f.price.touched ||  f.price.dirty || submitted), 'is-valid': f.price.valid }"
+                      aria-label="Amount (to the nearest dollar)">
+                  </div>
+                  <div *ngIf=" f.price.invalid &&  (f.price.touched ||  f.price.dirty || submitted)"
+                    class="invalid-tooltip">
+                    Please provide a price </div>
+                </fieldset>
+              </div>
+              <div class="col-md-4 mb-4 form-group">
+                <fieldset class="form-group mb-0">
+                  <label for="inputGroupFile01">Product Images</label> {{f.images.invalid}} {{productForm.valid}}
+                  <div class="custom-file">
+                    <input type="file" formControlName="images" class="custom-file-input" type="file" accept="image/*"
+                      [ngClass]="{ 'is-invalid': submitted && (f.images.invalid || f.images.errors?.required || !productForm.value.images), 'is-valid': f.images.valid }"
+                      multiple (change)="updateImage($event)">
+                    <label class="custom-file-label"
+                      for="inputGroupFile01">{{selectedImages.length ? selectedImages.length + ' Images Selected' : 'Upload Images' }}</label>
+                  </div>
+                </fieldset>
+                <div *ngIf="submitted && (f.images.invalid || f.images.errors?.required || !productForm.value.images)"
+                  class="invalid-tooltip">
+                  Please provide atleast a one image of a product </div>
+              </div>
+              <div
+                class="col-md-2 col-6 mb-4 text-center br-dashed p-2 mx-2 d-flex align-items-center justify-content-center"
+                *ngFor="let image of selectedImages; let i = index">
+                <span class="ps-rltv" (mouseover)="hoverImageIdx = i">
+                  <a href="javascript:;" class="p-0 clr_black" *ngIf="hoverImageIdx == i" (click)="cancelImage(i)">
+                    <i class="ft-x font-medium-3 m-1"></i>
+                  </a>
+                  <img [src]="image" height="250" class="w-100">
+                </span>
+              </div>
+              <div class="col-md-12 mb-4">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Product Description</label>
+                  <textarea class="form-control" rows="3" formControlName="productDescription"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-primary" type="submit" (click)="save()">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

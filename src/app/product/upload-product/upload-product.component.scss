@@ -1,0 +1,53 @@
+.color-box{
+    border: 1px solid #E0E0E0;
+    border-radius: 0.35rem;
+    color: transparent;
+    user-select: none;
+    // box-shadow: -8px 8px 14px 0 rgb(25 42 70 / 11%);
+    height: 20px;
+    width: 20px;
+}
+
+.br-dashed{
+    border: 2px dashed #E0E0E0;
+}
+
+.ft-x {
+    position: absolute;
+    right: 0;
+    background: black;
+    background: #E0E0E0;
+    display: flex;
+    border-radius: 16px;
+}
+
+.font-medium-3{
+    font-weight: 600;
+    padding: 3px;
+}
+
+.clr_black{
+    color: black;
+}
+
+img{
+    object-fit: cover;
+}
+
+:host ::ng-deep .invalid-select .ng-select.ng-select-single .ng-select-container {
+    border: 1px solid red;
+}
+
+:host ::ng-deep .ng-select .ng-clear-wrapper{
+    display: none;
+}
+
+.invalid-tooltip{
+    display: unset;
+    top: unset;
+    width: 98%;
+}
+
+
+
+

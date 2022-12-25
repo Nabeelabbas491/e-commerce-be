@@ -1,0 +1,71 @@
+<section id="extended">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title text-center">Upload Category</h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body table-responsive">
+            <div class="text-right mb-2">
+              <button class="btn btn-primary" (click)="addRow()">Add Category</button>
+            </div>
+            <table class="table text-center m-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th></th>
+                  <th>Category Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of dataSource; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>
+                    <div class="checkbox">
+                      <input type="checkbox" id="item1">
+                      <label for="item1"></label>
+                    </div>
+                  </td>
+                  <td class="w-50">
+                    <span *ngIf="!item.isEdit">{{item.name}} </span>
+                    <div class="form-group ps-rltv" *ngIf="item.isEdit">
+                      <input type="text" class="form-control" id="validationTooltip04"
+                        (keyup.enter)="onEnterKeyPress(item,i)" [(ngModel)]="item.name" #input="ngModel"
+                        [ngClass]="{ 'is-invalid': (!item.name.length && input.touched) || (!item.name.length && input.dirty), 'is-valid': item.name.length }"
+                        required>
+                      <div class="invalid-tooltip"
+                        *ngIf="(!item.name.length && input.touched) || (!item.name.length && input.dirty)">
+                        Category name is required
+                      </div>
+                    </div>
+
+                  </td>
+                  <td class="text-truncate">
+                    <div *ngIf="item.isEdit">
+                      <a href="javascript:;" class="success p-0" (click)=" item._id ? update(item,i) : save(item,i)">
+                        <i class="ft-check font-medium-3 mr-2"></i>
+                      </a>
+                      <a href="javascript:;" class="danger p-0" (click)="onCancel(item,i)">
+                        <i class="ft-x font-medium-3 mr-2"></i>
+                      </a>
+                    </div>
+                    <div *ngIf="!item.isEdit">
+                      <a href="javascript:;" class="success p-0" (click)="onEdit(item)">
+                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                      </a>
+                      <a href="javascript:;" class="danger" (click)="delete(item._id,i)">
+                        <i class="ft-trash font-medium-3"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
