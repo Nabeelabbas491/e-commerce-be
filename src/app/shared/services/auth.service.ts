@@ -30,6 +30,26 @@ export class AuthService {
     })
   }
 
+  forgotPassword(data) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.BACKEND_URL + "/api/user/forgot", data).subscribe((response) => {
+        resolve(response)
+      }, (error) => {
+        reject(error)
+      })
+    })
+  }
+
+  resetPassword(data) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.BACKEND_URL + "/api/user/reset-password", data).subscribe((response) => {
+        resolve(response)
+      }, (error) => {
+        reject(error)
+      })
+    })
+  }
+
   setUser(user) {
     localStorage.setItem("admin", JSON.stringify(user))
   }

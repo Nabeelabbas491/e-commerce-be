@@ -6,6 +6,7 @@ import { MustMatch } from '../../../shared/directives/must-match.validator';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-register-page',
@@ -17,7 +18,11 @@ export class RegisterPageComponent implements OnInit {
   registerFormSubmitted = false;
   registerForm: FormGroup;
   emailExist = false
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private toastr: ToastrService) { }
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private socailAuthService: SocialAuthService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({

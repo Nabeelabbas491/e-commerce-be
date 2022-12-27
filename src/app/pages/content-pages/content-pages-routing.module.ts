@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ComingSoonPageComponent } from "./coming-soon/coming-soon-page.component";
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 import { ErrorPageComponent } from "./error/error-page.component";
 import { ForgotPasswordPageComponent } from "./forgot-password/forgot-password-page.component";
 import { LockScreenPageComponent } from "./lock-screen/lock-screen-page.component";
@@ -22,6 +23,10 @@ const routes: Routes = [
         }
       },
       {
+        path: 'confirm-password',
+        component: ConfirmPasswordComponent,
+      },
+      {
         path: 'error',
         component: ErrorPageComponent,
         data: {
@@ -34,15 +39,15 @@ const routes: Routes = [
         data: {
           title: 'Forgot Password Page'
         }
-      },   
-      
+      },
+
       {
         path: 'lockscreen',
         component: LockScreenPageComponent,
         data: {
           title: 'Lock Screen page'
         }
-      },   
+      },
       {
         path: 'login',
         component: LoginPageComponent,
@@ -63,8 +68,8 @@ const routes: Routes = [
         data: {
           title: 'Register Page'
         }
-      }   
-      
+      }
+
     ]
   }
 ];

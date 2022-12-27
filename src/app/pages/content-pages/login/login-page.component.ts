@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from 'app/shared/services/auth.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
+import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login'
 
 
 @Component({
@@ -12,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login-page.component.scss']
 })
 
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
 
   loginFormSubmitted = false;
   isLoginFailed = false;
@@ -27,7 +28,34 @@ export class LoginPageComponent {
   constructor(private router: Router, private authService: AuthService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private socialAuthService: SocialAuthService
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.socialAuthService.authState.subscribe((user) => {
+      console.log("user", user)
+    })
+  }
+
+  signInWithGoogle(): void {
+    // this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((data) => {
+      console.log("ssas", data);
+    }).catch(data => {
+      console.log("data..", data)
+      // this.authService.signOut();
+      // this.router.navigate(['login']);
+    });
+  }
+
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  signOut(): void {
+    this.socialAuthService.signOut();
   }
 
   get lf() {

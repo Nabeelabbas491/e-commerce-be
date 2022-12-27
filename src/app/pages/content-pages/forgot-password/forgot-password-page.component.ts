@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
+import { AuthService } from 'app/shared/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-forgot-password-page',
@@ -9,14 +11,35 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 
 export class ForgotPasswordPageComponent {
-    @ViewChild('f') forogtPasswordForm: NgForm;
+    // forgotPasswordForm: FormGroup;
+
+
+    submitted = false;
+    forgotPasswordForm = new FormGroup({
+        email: new FormControl('', [Validators.required]),
+    });
 
     constructor(private router: Router,
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute,
+        private toastr: ToastrService,
+        private authService: AuthService) { }
+
+    get f() {
+        return this.forgotPasswordForm.controls;
+    }
 
     // On submit click, reset form fields
-    onSubmit() {
-        this.forogtPasswordForm.reset();
+    async sendEmail() {
+        console.log("gfeds", this.forgotPasswordForm.valid)
+        try {
+            this.submitted = true
+            if (this.forgotPasswordForm.valid) {
+                let response = await this.authService.forgotPassword(this.forgotPasswordForm.value)
+                console.log("response", response)
+                // this.toastr.success('ds')
+            }
+        } catch (e) { }
+        // this.forogtPasswordForm.reset();
     }
 
     // On login link click
