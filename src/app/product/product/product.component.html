@@ -32,87 +32,36 @@
                   <th>Product</th>
                   <th>Weight</th>
                   <th>Price</th>
-                  <th>Quantity</th>
+                  <th>Stock</th>
                   <th>Amount</th>
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of products">
-                  <td><img src="assets/img/elements/01.png" alt="product" style="height: 75px;"></td>
+                <tr *ngFor="let item of products; let i = index">
+                  <td (click)="selectedProduct = item; openModal(modal)" class="cursor-pointer"><img
+                      src="{{item.images[0].url}}" alt="product" style="height: 75px;"></td>
                   <td>{{item.productName}}</td>
                   <td>{{item.weight}} Ounce</td>
                   <td>${{item.price}}</td>
                   <td>
-                    <div class="btn-group ml-1">
+                    {{item.quantity}}
+                    <!-- <div class="btn-group ml-1">
                       <a class="btn btn-primary px-1 py-1 font-medium-5" href="javascript:void(0)">-</a>
                       <a class="btn btn-primary px-1 py-1" href="javascript:void(0)">{{item.quantity}}</a>
                       <a class="btn btn-primary px-1 py-1 font-medium-5" href="javascript:void(0)">+</a>
-                    </div>
+                    </div> -->
                   </td>
                   <td>${{item.price * item.quantity}}</td>
                   <td>
-                    <a href="javascript:;" class="danger">
+                    <a href="javascript:;" class="success p-0" (click)="edit(item._id)">
+                      <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                    </a>
+                    <a href="javascript:;" class="danger" (click)="delete(item._id,i)">
                       <i class="ft-trash font-medium-3"></i>
                     </a>
                   </td>
                 </tr>
-                <!-- <tr>
-                  <td><img src="assets/img/elements/11.png" alt="product" style="height: 75px;"></td>
-                  <td>Product 3</td>
-                  <td>20.9 Ounce</td>
-                  <td>$ 15.78</td>
-                  <td>
-                    <div class="btn-group ml-1">
-                      <a class="btn btn-primary px-1 py-1 font-medium-5" href="javascript:void(0)">-</a>
-                      <a class="btn btn-primary px-1 py-1" href="javascript:void(0)">1</a>
-                      <a class="btn btn-primary px-1 py-1 font-medium-5" href="javascript:void(0)">+</a>
-                    </div>
-                  </td>
-                  <td>$ 15.78</td>
-                  <td>
-                    <a href="javascript:;" class="danger">
-                      <i class="ft-trash font-medium-3"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td><img src="assets/img/elements/14.png" alt="product" style="height: 75px;"></td>
-                  <td>Product 4</td>
-                  <td>90 Ounce</td>
-                  <td>$ 24.51</td>
-                  <td>
-                    <div class="btn-group ml-1">
-                      <a class="btn btn-primary px-1 py-1 font-medium-5" href="javascript:void(0)">-</a>
-                      <a class="btn btn-primary px-1 py-1" href="javascript:void(0)">3</a>
-                      <a class="btn btn-primary px-1 py-1 font-medium-5" href="javascript:void(0)">+</a>
-                    </div>
-                  </td>
-                  <td>$ 73.53</td>
-                  <td>
-                    <a href="javascript:;" class="danger">
-                      <i class="ft-trash font-medium-3"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><b>Total</b></td>
-                  <td><b>$‭ 121.25‬</b></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><button class="btn btn-primary">Continue</button></td>
-                </tr> -->
               </tbody>
             </table>
           </div>
@@ -121,3 +70,37 @@
     </div>
   </div>
 </section>
+
+<!--  Modal -->
+<ng-template #modal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title text-center w-100 cursor-pointer"> <span>{{selectedProduct.productName}} </span> </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <section id="swiper-autoplay">
+        <div class="row">
+          <div class="col-12">
+            <div class="swiper-autoplay swiper-container" #swiper [swiper]="swiperAutoplayConfig">
+              <div class="swiper-wrapper ">
+                <div class="swiper-slide " *ngFor="let item of selectedProduct.images"><img class="img-fluid"
+                    src="{{item.url}}" alt="banner"></div>
+              </div>
+              <!-- Add Pagination -->
+              <div class="swiper-pagination"></div>
+              <!-- Add Arrows -->
+              <div class="swiper-button-next" style="color: black;"></div>
+              <div class="swiper-button-prev" style="color: black;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

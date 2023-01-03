@@ -34,9 +34,11 @@ export class ForgotPasswordPageComponent {
         try {
             this.submitted = true
             if (this.forgotPasswordForm.valid) {
-                let response = await this.authService.forgotPassword(this.forgotPasswordForm.value)
-                console.log("response", response)
-                // this.toastr.success('ds')
+                let response: any = await this.authService.forgotPassword(this.forgotPasswordForm.value)
+                if (response.status == 'sucesss') {
+                    this.toastr.success(response.message)
+                }
+                // this.forogtPasswordForm.reset();
             }
         } catch (e) { }
         // this.forogtPasswordForm.reset();

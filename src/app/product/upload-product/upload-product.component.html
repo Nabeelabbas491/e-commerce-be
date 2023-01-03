@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-content">
         <div class="card-body">
-          <form class="needs-validation" [formGroup]="productForm" (ngSubmit)="onReactiveFormSubmit()">
+          <form class="needs-validation" [formGroup]="productForm">
             <ngx-spinner></ngx-spinner>
             <div class="form-row">
               <div class="col-md-4 mb-4 form-group">
@@ -89,27 +89,27 @@
               </div>
               <div class="col-md-4 mb-4 form-group">
                 <fieldset class="form-group mb-0">
-                  <label for="inputGroupFile01">Product Images</label> {{f.images.invalid}} {{productForm.valid}}
+                  <label for="inputGroupFile01">Product Images</label>
                   <div class="custom-file">
                     <input type="file" formControlName="images" class="custom-file-input" type="file" accept="image/*"
-                      [ngClass]="{ 'is-invalid': submitted && (f.images.invalid || f.images.errors?.required || !productForm.value.images), 'is-valid': f.images.valid }"
+                      [ngClass]="{ 'is-invalid': submitted && !selectedImages.length, 'is-valid': selectedImages.length }"
                       multiple (change)="updateImage($event)">
                     <label class="custom-file-label"
                       for="inputGroupFile01">{{selectedImages.length ? selectedImages.length + ' Images Selected' : 'Upload Images' }}</label>
                   </div>
                 </fieldset>
-                <div *ngIf="submitted && (f.images.invalid || f.images.errors?.required || !productForm.value.images)"
-                  class="invalid-tooltip">
+                <div *ngIf="submitted && !selectedImages.length" class="invalid-tooltip">
                   Please provide atleast a one image of a product </div>
               </div>
               <div
                 class="col-md-2 col-6 mb-4 text-center br-dashed p-2 mx-2 d-flex align-items-center justify-content-center"
                 *ngFor="let image of selectedImages; let i = index">
                 <span class="ps-rltv" (mouseover)="hoverImageIdx = i">
-                  <a href="javascript:;" class="p-0 clr_black" *ngIf="hoverImageIdx == i" (click)="cancelImage(i)">
+                  <a href="javascript:;" class="p-0 clr_black" *ngIf="hoverImageIdx == i"
+                    (click)="removeImage(i,image)">
                     <i class="ft-x font-medium-3 m-1"></i>
                   </a>
-                  <img [src]="image" height="250" class="w-100">
+                  <img [src]="image.url" height="250" class="w-100">
                 </span>
               </div>
               <div class="col-md-12 mb-4">
@@ -120,7 +120,10 @@
               </div>
             </div>
             <div class="text-center">
-              <button class="btn btn-primary" type="submit" (click)="save()">Submit</button>
+              <button class="btn btn-primary" type="submit"
+                (click)="save()">{{ productForm.value.id ? 'Update' : 'Save'}} Product</button>
+              <button class="btn btn-light ml-2" type="submit" [routerLink]="['/product']"
+                *ngIf="productForm.value.id">cancel</button>
             </div>
           </form>
         </div>

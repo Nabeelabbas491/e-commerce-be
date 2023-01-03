@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'app/shared/services/auth.service';
 import { ProductService } from 'app/shared/services/product.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,7 +18,8 @@ export class ShopTypeComponent implements OnInit {
 
   constructor(private productService: ProductService,
     private cdr: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authServuce: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,7 @@ export class ShopTypeComponent implements OnInit {
   addRow() {
     this.dataSource.unshift({
       shopType: '',
+      user: this.authServuce.getUser()._id,
       isEdit: true,
     })
     setTimeout(() => {

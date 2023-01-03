@@ -2,6 +2,7 @@ import { createViewChild } from '@angular/compiler/src/core';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ItemsList } from '@ng-select/ng-select/lib/items-list';
+import { AuthService } from 'app/shared/services/auth.service';
 import { ProductService } from 'app/shared/services/product.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,7 +19,8 @@ export class CategoryComponent implements OnInit {
 
   constructor(private productService: ProductService,
     private cdr: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class CategoryComponent implements OnInit {
   addRow() {
     this.dataSource.unshift({
       name: '',
+      user: this.authService.getUser()._id,
       isEdit: true,
     })
     setTimeout(() => {

@@ -1,0 +1,18 @@
+::ng-deep .carousel-inner > .carousel-item > img {
+    height: 20rem !important;
+}
+
+::ng-deep .carousel-indicators li{
+    background-color: black !important;
+}
+
+// jo arrow buttons neechay atay hain swiping next or prev k , unhe swiper k start or end per set karnay k liye
+:host ::ng-deep .owl-theme .owl-nav{
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+

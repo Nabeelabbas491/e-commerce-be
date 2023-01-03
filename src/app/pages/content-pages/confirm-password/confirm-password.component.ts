@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MustMatch } from 'app/shared/directives/must-match.validator';
+import { AuthService } from 'app/shared/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-confirm-password',
@@ -13,7 +15,9 @@ export class ConfirmPasswordComponent implements OnInit {
   submitted = false;
   confirmPasswordForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
+    private toastr: ToastrService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     let user_id = null
@@ -34,12 +38,16 @@ export class ConfirmPasswordComponent implements OnInit {
     return this.confirmPasswordForm.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     try {
       this.submitted = true
       if (this.confirmPasswordForm.valid) {
         delete this.confirmPasswordForm.value.confirmPassword
-        console.log("form..", this.confirmPasswordForm.value)
+        let response: any = await this.authService.resetPassword(this.confirmPasswordForm.value)
+        if (response.status == 'sucesss') {
+          this.router.navigate(['/pages/login'])
+          this.toastr.success(response.message)
+        }
       }
     } catch (e) { }
   }

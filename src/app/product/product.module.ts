@@ -16,7 +16,8 @@ import { ShopTypeComponent } from './shop-type/shop-type.component';
 import { NewComponent } from './new/new.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ProductComponent } from './product/product.component';
-
+import { ProductViewComponent } from './product-view/product-view.component';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProductComponent } from './product/product.component';
     CategoryComponent,
     ShopTypeComponent,
     NewComponent,
-    ProductComponent
+    ProductComponent,
+    ProductViewComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { ProductComponent } from './product/product.component';
     UiSwitchModule,
     QuillModule.forRoot(),
     NgSelectModule,
-    TagInputModule
+    SwiperModule,
+    TagInputModule,
   ]
 })
 export class ProductModule { }

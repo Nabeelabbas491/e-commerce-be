@@ -31,7 +31,7 @@ export class ProductService {
 
   updateCategory(data) {
     return new Promise((resolve, reject) => {
-      this.apiService.put(`/api/category/${data._id}`, data).subscribe((response) => {
+      this.apiService.patch(`/api/category/${data._id}`, data).subscribe((response) => {
         resolve(response)
       }, (error) => {
         reject(error)
@@ -71,7 +71,7 @@ export class ProductService {
 
   updateShopType(data) {
     return new Promise((resolve, reject) => {
-      this.apiService.put(`/api/shopType/${data._id}`, data).subscribe((response) => {
+      this.apiService.patch(`/api/shopType/${data._id}`, data).subscribe((response) => {
         resolve(response)
       }, (error) => {
         reject(error)
@@ -91,7 +91,7 @@ export class ProductService {
 
   getCloudinrayImage(file) {
     return new Promise((resolve, reject) => {
-      this.apiService.post(`/api/product/image`, file).subscribe((response) => {
+      this.apiService.post(`/api/image`, file).subscribe((response) => {
         resolve(response)
       }, (error) => {
         reject(error)
@@ -99,9 +99,49 @@ export class ProductService {
     })
   }
 
-  saveProduct(file) {
+  deleteImage(public_id, productId) {
     return new Promise((resolve, reject) => {
-      this.apiService.post(`/api/product`, file).subscribe((response) => {
+      this.apiService.delete(`/api/image?publicId=${public_id}&productId=${productId}`).subscribe((response) => {
+        resolve(response)
+      }, (error) => {
+        reject(error)
+      })
+    })
+  }
+
+  // uploadImage(formData) {
+  //   return new Promise((resolve, reject) => {
+  //     this.apiService.post(`/api/image`, formData).subscribe((response) => {
+  //       resolve(response)
+  //     }, (error) => {
+  //       reject(error)
+  //     })
+  //   })
+  // }
+
+  saveProduct(data) {
+    return new Promise((resolve, reject) => {
+      this.apiService.post(`/api/product`, data).subscribe((response) => {
+        resolve(response)
+      }, (error) => {
+        reject(error)
+      })
+    })
+  }
+
+  updateProduct(data) {
+    return new Promise((resolve, reject) => {
+      this.apiService.put(`/api/product`, data).subscribe((response) => {
+        resolve(response)
+      }, (error) => {
+        reject(error)
+      })
+    })
+  }
+
+  deleteProduct(id) {
+    return new Promise((resolve, reject) => {
+      this.apiService.delete(`/api/product/${id}`).subscribe((response) => {
         resolve(response)
       }, (error) => {
         reject(error)
@@ -112,6 +152,16 @@ export class ProductService {
   getProducts() {
     return new Promise((resolve, reject) => {
       this.apiService.get(`/api/product`).subscribe((response) => {
+        resolve(response)
+      }, (error) => {
+        reject(error)
+      })
+    })
+  }
+
+  getProductById(id) {
+    return new Promise((resolve, reject) => {
+      this.apiService.get(`/api/product/${id}`).subscribe((response) => {
         resolve(response)
       }, (error) => {
         reject(error)
